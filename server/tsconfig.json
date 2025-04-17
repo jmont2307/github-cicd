@@ -10,8 +10,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false
-    // "noEmitOnError": true /* Disable emitting files if any type checking errors are reported. */
+    "strict": false,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noEmitOnError": false
   },
   "include": ["src", "src/**/*.json"],
   "typeRoots": ["./node_modules/@types", "./src/types"]

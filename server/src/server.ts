@@ -19,7 +19,7 @@ app.use(express.static('../client/dist'));
 app.use(routes);
 
 // Add health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (_, res) => {
   const dbStatus = db.readyState === 1 ? 'connected' : 'disconnected';
   res.json({ 
     status: 'ok',
