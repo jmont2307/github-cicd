@@ -17,4 +17,11 @@ jobs:
       
       - name: Deploy to Render
         run: |
+          echo "Triggering Render deployment webhook..."
           curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      
+      - name: Deployment Status
+        run: |
+          echo "Deployment triggered successfully!"
+          echo "Your application is being deployed to Render."
+          echo "This may take a few minutes to complete."
