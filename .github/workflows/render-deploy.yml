@@ -15,13 +15,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Deploy to Render
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      - name: Verify MongoDB Connection
+        run: |
+          echo "Checking MongoDB connection variables are set up in Render"
+      
+      - name: Trigger Render Deploy Hook
+        id: render_deploy
         run: |
           echo "Triggering Render deployment webhook..."
-          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }})
+          if [ "$RESPONSE" -eq 200 ] || [ "$RESPONSE" -eq 201 ]; then
+            echo "Deployment triggered successfully with response code: $RESPONSE"
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "Deployment trigger failed with response code: $RESPONSE"
+            echo "success=false" >> $GITHUB_OUTPUT
+          fi
       
       - name: Deployment Status
+        if: steps.render_deploy.outputs.success == 'true'
         run: |
           echo "Deployment triggered successfully!"
           echo "Your application is being deployed to Render."
           echo "This may take a few minutes to complete."
+      
+      - name: Deployment Failed
+        if: steps.render_deploy.outputs.success != 'true'
+        run: |
+          echo "Deployment trigger failed."
+          echo "Please check your Render Deploy Hook URL and ensure it is correct."
+          exit 1

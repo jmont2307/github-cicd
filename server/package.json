@@ -5,7 +5,8 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "copy-files": "cp -r src/seeds/*.json dist/seeds/",
+    "build": "tsc && npm run copy-files",
     "seed": "node dist/seeds/seed.js",
     "start": "node dist/server.js",
     "watch": "nodemon dist/server.js",
