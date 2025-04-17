@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
-    "copy-files": "cp -r src/seeds/*.json dist/seeds/",
+    "copy-files": "mkdir -p dist/seeds && cp -r src/seeds/*.json dist/seeds/ || echo \"No JSON files to copy\"",
     "build": "tsc && npm run copy-files",
     "seed": "node dist/seeds/seed.js",
     "start": "node dist/server.js",
