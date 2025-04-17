@@ -14,7 +14,17 @@ A full-stack application that demonstrates GitHub Actions CI/CD integration with
    git push -u origin develop
    ```
 
-### 2. Deploy to Render
+### 2. Set Up MongoDB Atlas
+
+1. Sign up for a [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) account
+2. Create a new cluster (free tier is fine)
+3. Set up a database user with password
+4. Add your IP to the allowlist (or allow access from anywhere for development)
+5. Get your connection string by clicking "Connect" > "Connect your application"
+6. Your connection string will look like: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>?retryWrites=true&w=majority`
+7. Replace `<username>`, `<password>`, `<cluster>`, and `<database>` with your information
+
+### 3. Deploy to Render
 
 1. Sign up for a [Render](https://render.com/) account
 2. Create a new Web Service
@@ -22,7 +32,9 @@ A full-stack application that demonstrates GitHub Actions CI/CD integration with
 4. Configure the Web Service:
    - Build Command: `npm install && npm run build`
    - Start Command: `npm start`
-   - Add environment variables including your MongoDB connection string
+   - Add environment variables:
+     - Key: `MONGODB_URI`
+     - Value: Your MongoDB Atlas connection string
 5. After deployment, turn off Auto-Deploy in the Render settings
 6. Copy the Render Deploy Hook URL from Settings
 

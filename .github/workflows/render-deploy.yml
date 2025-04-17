@@ -22,7 +22,8 @@ jobs:
       
       - name: Verify MongoDB Connection
         run: |
-          echo "Checking MongoDB connection variables are set up in Render"
+          echo "Important: Make sure to add MONGODB_URI environment variable in your Render dashboard"
+          echo "Your Render environment should have MONGODB_URI set to your MongoDB Atlas connection string"
       
       - name: Trigger Render Deploy Hook
         id: render_deploy
